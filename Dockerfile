@@ -1,29 +1,26 @@
 FROM alpine:latest
 
-# Install dependencies
+# Install curl and unzip
 RUN apk add --no-cache curl unzip
 
-# Set PocketBase version
-ENV PB_VERSION=v0.29.1
-
-# Download and install PocketBase
-RUN curl -L https://github.com/pocketbase/pocketbase/releases/download/${PB_VERSION}/pocketbase_linux_amd64.zip -o pb.zip \
+# Download PocketBase v0.29.1
+RUN curl -L https://github.com/pocketbase/pocketbase/releases/download/v0.29.1/pocketbase_linux_amd64.zip -o pb.zip \
     && unzip pb.zip \
     && rm pb.zip \
     && chmod +x pocketbase
 
-# Create persistent data directory
+# Create data directory
 RUN mkdir /pb_data
 
-# Copy the startup script
+# Copy start script
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
 
-# Set working directory
+# Set working dir
 WORKDIR /
 
-# Expose PocketBase's default port
+# Expose PocketBase port
 EXPOSE 8090
 
-# Start PocketBase
+# Start command
 CMD ["/start.sh"]
