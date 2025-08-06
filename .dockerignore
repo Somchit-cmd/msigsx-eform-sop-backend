@@ -1,4 +1,4 @@
 .git
-node_modules
 *.zip
 *.log
+node_modules
